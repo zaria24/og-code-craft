@@ -1,0 +1,13 @@
+# CREATE AN ALPACA ACCOUNT AND REQUEST API KEYS
+
+API_KEY = ''
+SECRET_KEY = ''
+
+'''
+ALPACA_URL = 'https://paper-api.alpaca.markets'
+
+HEADERS - {
+     'PKO7GYZF6OFKIVYAEHP1': API_KEY,
+     'NggY7LkPIM4mAHvn4YqbpF2rAF7IwxQc0tzuOQlH': SECRET_KEY
+}
+'''
