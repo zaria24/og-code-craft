@@ -1,6 +1,6 @@
 ''' THIS WILL BE USED WITH EACH STOCK'S OWN BUY AND SELL METHODS'''
 
-import requests, json ##edited
+import requests, json
 from config import * # config file
 import tkinter as tk
 from tkinter import *
@@ -51,7 +51,7 @@ def create_order(symbol, qty, side, type, time_in_force):
         'side': side,
         'type': type,
         'time_in_force': time_in_force
-    }
+        }
     r = requests.post(ORDERS_URL, json=data, headers=HEADERS)
     response = json.loads(r.content)
     print(response)
@@ -147,9 +147,9 @@ def sell_all_stocks():
     stocks_to_sell = ['AAPL', 'TSLA', 'AMZN', 'GOOGL', 'META', 'MSFT']
     for stock in stocks_to_sell:
         create_order(symbol=stock, qty=1, side='sell', type='market', time_in_force='day')
-    # orders = get_orders()
-    # for order in orders:
-    #   create_order(symbol=order['symbol'], qty=order['qty'], side='sell', type='market', time_in_force='day')
+    orders = get_orders()
+    for order in orders:
+       create_order(symbol=order['symbol'], qty=order['qty'], side='sell', type='market', time_in_force='day')
 
 def get_closedorders():
      r = requests.get(CLOSED_ORDERS, headers=HEADERS)
@@ -193,7 +193,7 @@ def orderingGUI():
 
     # Display the user's cash amount
     cash = get_cash()
-    cashAmount = tk.Label(root, text=f'You currently have: ${cash}', font=('TkDefaultFont', 18, 'bold'))
+    cashAmount = tk.Label(root, text=f'You currently have: ${cash}', font=('TkDefaultFont', 25, 'bold'))
     #cashAmount.pack(pady=10,fill='x')
     cashAmount.grid(column=6, row=3)
 
@@ -211,32 +211,32 @@ def orderingGUI():
 
     # AAPL
     AAPLprice = get_tradePrice(AAPLTRADE_PRICE)
-    buymess = tk.Label(root, text=f'AAPL at ${(AAPLprice)}',font=('TkDefaultFont', 18, 'bold'))
+    buymess = tk.Label(root, text=f'AAPL at ${(AAPLprice)}',font=('TkDefaultFont', 18, 'bold italic'))
     buymess.grid(column=6, row=7)
 
     # MSFt
     MSFTprice = get_tradePrice(MSFTTRADE_PRICE)
-    buymess = tk.Label(root, text=f'MSFT at ${(MSFTprice)}',font=('TkDefaultFont', 18, 'bold'))
+    buymess = tk.Label(root, text=f'MSFT at ${(MSFTprice)}',font=('TkDefaultFont', 18, 'bold italic'))
     buymess.grid(column=6, row=8)
     
     # META
     METAprice = get_tradePrice(METATRADE_PRICE)
-    buymess = tk.Label(root, text=f'META at ${(METAprice)}',font=('TkDefaultFont', 18, 'bold'))
+    buymess = tk.Label(root, text=f'META at ${(METAprice)}',font=('TkDefaultFont', 18, 'bold italic'))
     buymess.grid(column=6, row=9)
 
     # TSLA
     TSLAprice = get_tradePrice(TSLATRADE_PRICE)
-    buymess = tk.Label(root, text=f'TSLA at ${(TSLAprice)}',font=('TkDefaultFont', 18, 'bold'))
+    buymess = tk.Label(root, text=f'TSLA at ${(TSLAprice)}',font=('TkDefaultFont', 18, 'bold italic'))
     buymess.grid(column=6, row=10)
 
     # AMZN
     AMZNprice = get_tradePrice(AMZNTRADE_PRICE)
-    buymess = tk.Label(root, text=f'AMZN at ${(AMZNprice)}',font=('TkDefaultFont', 18, 'bold'))
+    buymess = tk.Label(root, text=f'AMZN at ${(AMZNprice)}',font=('TkDefaultFont', 18, 'bold italic'))
     buymess.grid(column=6, row=11)
 
     # GOOG
     GOOGprice = get_tradePrice(GOOGTRADE_PRICE)
-    buymess = tk.Label(root, text=f'GOOG at ${(GOOGprice)}',font=('TkDefaultFont', 18, 'bold'))
+    buymess = tk.Label(root, text=f'GOOG at ${(GOOGprice)}',font=('TkDefaultFont', 18, 'bold italic'))
     buymess.grid(column=6, row=12)
 
      #root.pack(side=RIGHT, fill='none', expand=True)
@@ -297,8 +297,8 @@ def welcomeScr():
     welcome = tk.Tk()
     welcome.title('Code Craft - Alpaca Trading API')
     welcome.state('zoomed')
-    image = Image.open('CodeCraftLogo.png')
-    image = ImageTk.PhotoImage(image)
+    image = Image.open('ProfitProphets.png')
+    #image = ImageTk.PhotoImage(image)
 
     top = Frame(welcome)
     top.pack(side=TOP)
@@ -349,7 +349,7 @@ def welcomeScr():
 welcome = tk.Tk()
 welcome.title('Code Craft - Alpaca Trading API')
 welcome.state('zoomed')
-image = Image.open('CodeCraftLogo.png')
+image= Image.open('/Users/stuteam1/Desktop/ProfitProphets.png') #replaced image 
 image = ImageTk.PhotoImage(image)
 
 top = Frame(welcome)
@@ -366,7 +366,7 @@ image_label.pack()
 buyBtn = Button(left, text='BUY Stocks', bd='5', command=lambda:[orderingGUI(), welcome.destroy(), activate_bot()],font=('TkDefaultFont', 18))
 buyBtn.pack(pady=40)
 
-btn_deactivate = Button(left, text='SELL Stocks', bd='5', command=lambda:[deactivate_bot(), congratScreen()], font=('TkDefaultFont', 18))
+btn_deactivate = Button(right, text='SELL Stocks', bd='5', command=lambda:[deactivate_bot(), congratScreen()], font=('TkDefaultFont', 18))
 btn_deactivate.pack(pady=40)
 
 
@@ -376,23 +376,22 @@ welcome.geometry('{}x{}'.format(welcome.winfo_screenwidth(), welcome.winfo_scree
 # Table to list orders
 response = get_closedorders()
 
-#table = ttk.Treeview(lframe)
+## table = ttk.Treeview(lframe)
 columns = ('Symbol', 'Quantity', 'Side', 'Status')
 table = ttk.Treeview(welcome, columns=columns, show='headings')
-#table['columns'] = ('Symbol', 'Quantity', 'Side', 'Status')
+table['columns'] = ('Symbol', 'Quantity', 'Side', 'Status')
 table.heading('Symbol', text='Symbol')
 table.heading('Quantity', text='Quantity')
 table.heading('Side', text='Side')
 table.heading('Status', text='Status')
 
 
-# symbol, qty, side, status
-#for order in response:
- #   symbol = order['symbol']
-  #  qty = order['qty']
-   # side = order['side']
-    #status = order['status']
-    #table.insert('', 'end', values=(symbol, qty, side, status))
+#symbol, qty, side, status (THIS SECTION DOES NOT WORK)
+
+for create_order in response:
+     symbol = create_order['symbol']
+     status = create_order['status']
+     table.insert('', 'end', values=(symbol, qty, side, status))
 
 table.pack()
 
@@ -402,7 +401,6 @@ table.pack()
 
 welcome.mainloop()
 #root.mainloop()
-
 
 
 
@@ -452,3 +450,6 @@ def monitor_stock_prices():
             break
         time.sleep(60)
 '''
+
+
+
